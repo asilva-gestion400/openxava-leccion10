@@ -1,0 +1,33 @@
+<?xml version = "1.0" encoding = "ISO-8859-1"?>
+
+<!DOCTYPE controladores SYSTEM "dtds/controladores.dtd">
+
+<controladores>
+    
+    <controlador nombre="VehiculoSimple">
+    	<accion nombre="verInformacion" modo="detail"
+    		clase="com.ayto.multas.acciones.VerInformacionVehiculo"/>
+    </controlador>
+    
+    <controlador nombre="MultasPagadas">
+    
+    	<accion nombre="verEstado" modo="detail"
+    		clase="com.ayto.multas.acciones.VerEstadoMulta"/>
+    		
+        <accion nombre="verInformacionPrimerVehiculo" modo="detail"
+    		clase="com.ayto.multas.acciones.VerInformacionPrimerVehiculoDesdeMultas"/>
+    		
+    	<accion nombre="verInformacionSegundoVehiculo" modo="detail"
+    		clase="com.ayto.multas.acciones.VerInformacionSegundoVehiculoDesdeMultas"/>
+    		
+    	<accion nombre="totalPagado" modo="list"
+    		clase="com.ayto.multas.acciones.VerTotalPagado"/>
+    		
+    </controlador>
+    
+     <controlador nombre="Multas">
+    	 <accion nombre="clonar" modo="list"
+    		clase="com.ayto.multas.acciones.ClonarMulta"/>
+     </controlador>
+    
+</controladores>
