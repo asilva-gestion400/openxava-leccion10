@@ -5,7 +5,7 @@ import javax.persistence.*;
 import org.openxava.annotations.*;
 
 import com.ayto.multas.acciones.*;
-import com.ayto.multas.convertidores.*;
+import com.ayto.multas.util.*;
 
 @View(name = "Municipio", members = "municipio")
 

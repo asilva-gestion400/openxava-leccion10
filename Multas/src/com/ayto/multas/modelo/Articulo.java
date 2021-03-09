@@ -1,6 +1,7 @@
 package com.ayto.multas.modelo;
 
 import java.math.*;
+import java.util.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -10,7 +11,7 @@ import org.openxava.jpa.*;
 import org.openxava.model.*;
 import org.openxava.util.*;
 
-import com.ayto.multas.convertidores.*;
+import com.ayto.multas.util.*;
 import com.ayto.multas.validadores.*;
 
 @Entity
@@ -56,11 +57,10 @@ public class Articulo extends Identifiable {
 	@Convert(converter = ConverterCharDB400.class)
 	private String descripcion;
 	
-	// @Depends("articulo, apartado, opcion, reglamento")
-	@Hidden
-	public String getInformacion() {
-		return getArticulo() + " " + getApartado() + " " + getOpcion() + " " + getReglamento();
-	}
+	@ReadOnly
+	@ListProperties(value = "anyo, fecha, importe, infractor.nif, infractor.nombre")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "articulo")
+	private Collection<Multa> multas;
 	
 	@Hidden
 	public boolean hayMultasAsociadas(){
@@ -121,5 +121,12 @@ public class Articulo extends Identifiable {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	
+
+	public Collection<Multa> getMultas() {
+		return multas;
+	}
+
+	public void setMultas(Collection<Multa> multas) {
+		this.multas = multas;
+	}
 }

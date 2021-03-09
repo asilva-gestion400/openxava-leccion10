@@ -16,9 +16,7 @@ import org.openxava.util.*;
 
 import com.ayto.multas.acciones.*;
 import com.ayto.multas.calculadores.*;
-import com.ayto.multas.convertidores.*;
-
-import jdk.internal.agent.resources.*;
+import com.ayto.multas.util.*;
 
 @View(members = 
 	" anyo, fecha;" +
@@ -54,6 +52,8 @@ public class Multa extends Identifiable {
 	@PrePersist @PreUpdate
 	private void onPrePersistOrPreUpdate() {
 		
+		codigoAgente = 0;
+		
 		if(!Is.empty(agente)) {
 			
 			codigoAgente = agente.getCodigo();
@@ -79,6 +79,13 @@ public class Multa extends Identifiable {
 			
 			matriculaVehiculo2 = segundoVehiculoImplicado.getMatricula();
 		}
+		
+		idArticulo = "";
+		
+		if(!Is.empty(articulo)) {
+			
+			idArticulo = articulo.getId();
+		} 
 	}
 	
 	 /* BeanValidator: si no es true devolverá error */
@@ -111,10 +118,11 @@ public class Multa extends Identifiable {
 	@Column(name = "MULAGT",length = 9)
 	private int codigoAgente;
 	
-	@NoFrame
+	@NoFrame @NoCreate @NoModify
 	@ReferenceView(value = "desdeMulta")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "MULAGT", referencedColumnName = "AGTCOD", insertable = false, updatable = false)
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Agente agente;
 	
 	@Column(name = "MULINF",length = 9)
@@ -124,6 +132,7 @@ public class Multa extends Identifiable {
 	@ReferenceView(value = "desdeMulta")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "MULINF", referencedColumnName = "INFNIF",insertable = false, updatable = false)
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Infractor infractor;
 	
 	@DefaultValueCalculator(DefaultEstadoMultaCalculator.class)
@@ -139,24 +148,31 @@ public class Multa extends Identifiable {
 	@ReferenceView(value="VehiculoSimple")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "MULVH1", referencedColumnName = "VHCMTC",insertable = false, updatable = false)
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Vehiculo vehiculoImplicado;
 	
 	@Column(name = "MULVH2",length = 10)
 	private String matriculaVehiculo2;
-	
-	@ManyToOne @NoCreate @NoModify
+	 
+	@NoCreate @NoModify
 	@ReferenceView(value="VehiculoSimple")
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "MULVH2", referencedColumnName = "VHCMTC",insertable = false, updatable = false)
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Vehiculo segundoVehiculoImplicado;
 	
-	@Column(name = "MULDSC",length = 3, scale = 2)
+	@Column(name = "MULDSC", length = 3, scale = 2)
 	@Convert(converter = ConverterBigDecimalDB400.class)
 	private BigDecimal porcentajeDescuento;
+
+	@Column(name = "MULART", length = 32)
+	private String idArticulo;
 	
-	@ManyToOne 
-	@DescriptionsList(descriptionProperties = "informacion")
+	@DescriptionsList(descriptionProperties = "articulo, apartado, opcion, reglamento")
 	@OnChange(AlCambiarArticuloEnMulta.class)
-	@JoinColumn(name = "MULART", referencedColumnName = "ARTOID")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "MULART", referencedColumnName = "ARTOID",insertable = false, updatable = false)
+	@NotFound(action = NotFoundAction.IGNORE)
 	private Articulo articulo;
 	
 	/* propiedad calculada */
@@ -185,7 +201,6 @@ public class Multa extends Identifiable {
 
 	public BigDecimal getImporte() {
 		return importe == null ? BigDecimal.ZERO : importe;
-//		return importe;
 	}
 
 	public void setImporte(BigDecimal importe) {
@@ -198,22 +213,6 @@ public class Multa extends Identifiable {
 
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
-	}
-
-	public Agente getAgente() {
-		return agente;
-	}
-
-	public void setAgente(Agente agente) {
-		this.agente = agente;
-	}
-
-	public Infractor getInfractor() {
-		return infractor;
-	}
-
-	public void setInfractor(Infractor infractor) {
-		this.infractor = infractor;
 	}
 
 	public EstadoMulta getEstado() {
@@ -232,7 +231,26 @@ public class Multa extends Identifiable {
 		this.porcentajeDescuento = porcentajeDescuento;
 	}
 
+	public Agente getAgente() {
+		
+		return agente;
+	}
+
+	public void setAgente(Agente agente) {
+		this.agente = agente;
+	}
+
+	public Infractor getInfractor() {
+		
+		return infractor;
+	}
+
+	public void setInfractor(Infractor infractor) {
+		this.infractor = infractor;
+	}
+
 	public Vehiculo getVehiculoImplicado() {
+		
 		return vehiculoImplicado;
 	}
 
@@ -241,6 +259,7 @@ public class Multa extends Identifiable {
 	}
 
 	public Vehiculo getSegundoVehiculoImplicado() {
+		
 		return segundoVehiculoImplicado;
 	}
 

@@ -28,6 +28,20 @@
      <controlador nombre="Multas">
     	 <accion nombre="clonar" modo="list"
     		clase="com.ayto.multas.acciones.ClonarMulta"/>
+     </controlador>  
+     
+     <controlador nombre="CodigoPostal">
+     
+    	 <accion nombre="llamadaRPG" modo="list" clase="com.ayto.multas.acciones.AbrirDialogoCrearCodigoPostal"/>
+    	 
+     </controlador>
+     
+     <controlador nombre="DialogoCodigoPostal">
+     
+    	 <accion nombre="crear" clase="com.ayto.multas.acciones.CrearCodigoPostalLlamadaRPG"/>
+    	 
+    	 <accion nombre="cancel" clase="org.openxava.actions.CancelAction" />
+    	 
      </controlador>
     
 </controladores>

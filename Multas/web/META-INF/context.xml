@@ -7,7 +7,7 @@
     <Resource name="jdbc/MultasDS" auth="Container" type="javax.sql.DataSource"
 	      maxTotal="20" maxIdle="5" maxWaitMillis="10000"
 	      driverClassName="com.ibm.as400.access.AS400JDBCDriver"
-	      username="prejava" password="java_20a" 
+	      username="ELCHE" password="N43LCH8G" 
 	      url="jdbc:as400:titan.gestion400.local;threshold=16777216;date format=iso;sort=language;sort language=ESP;block size=512;extended dynamic=true;lazy close=true;query optimize goal=0;data compression=true"/>
 
 </Context>

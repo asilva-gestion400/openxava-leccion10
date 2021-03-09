@@ -8,7 +8,7 @@ import org.openxava.annotations.*;
 import org.openxava.util.*;
 
 import com.ayto.multas.calculadores.*;
-import com.ayto.multas.convertidores.*;
+import com.ayto.multas.util.*;
 import com.ayto.multas.validadores.*;
 
 @View(members="matricula, informacionVehiculo; marca, modelo; tipo; multas;multasComoSegundoVehiculo")
@@ -31,14 +31,14 @@ public class Vehiculo {
 	@Convert(converter = ConverterCharDB400.class)
 	private String modelo;
 
-	@OneToMany(mappedBy = "vehiculoImplicado")
-	@ListProperties("estado,anyo,fecha,importe")
 	@ReadOnly 
+	@ListProperties("estado,anyo,fecha,importe")
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "vehiculoImplicado")
 	private Collection<Multa> multas;
 	
-	@OneToMany(mappedBy = "segundoVehiculoImplicado")
+	@ReadOnly
 	@ListProperties("estado,anyo,fecha,importe")
-	@ReadOnly 
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "segundoVehiculoImplicado")
 	private Collection<Multa> multasComoSegundoVehiculo;
 	
 	@DefaultValueCalculator(DefaultTipoVehiculo.class)

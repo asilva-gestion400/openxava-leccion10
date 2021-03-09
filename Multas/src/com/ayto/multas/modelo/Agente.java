@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 import org.openxava.annotations.*;
 
-import com.ayto.multas.convertidores.*;
+import com.ayto.multas.util.*;
 
 @Tab(properties = "codigo,nombre,direccion.viaPublica,direccion.codigoPostal", 
 	 defaultOrder =  "${codigo} DESC")
@@ -19,7 +19,7 @@ import com.ayto.multas.convertidores.*;
 @Table(schema = ConstantesBD.ESQUEMA_MULTAS, name = "MULAGT")
 public class Agente {
 	
-	@Id
+	@Id @Hidden
 	@Column(name = "AGTCOD",length = 9)
 	private int codigo;
 	    
@@ -37,8 +37,8 @@ public class Agente {
 	private Direccion direccion;
 	
 	@ReadOnly
-	@OneToMany(mappedBy = "agente")
 	@ListProperties(value = "anyo, fecha, importe, infractor.nif, infractor.nombre")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "agente")
 	private Collection<Multa> multas;
 
 	public int getCodigo() {

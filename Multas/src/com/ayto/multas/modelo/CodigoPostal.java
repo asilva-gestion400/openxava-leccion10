@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 import org.openxava.annotations.*;
 
-import com.ayto.multas.convertidores.*;
+import com.ayto.multas.util.*;
 
 @Entity
 @Table(schema = ConstantesBD.ESQUEMA_MULTAS, name = "MULCDP")

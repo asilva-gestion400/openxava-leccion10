@@ -3,11 +3,10 @@ package com.ayto.multas.modelo;
 import java.util.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 
 import org.openxava.annotations.*;
 
-import com.ayto.multas.convertidores.*;
+import com.ayto.multas.util.*;
 
 
 @Tab(properties = "nif,nombre,direccion.viaPublica,direccion.codigoPostal, fechaCaducidadPermisoConducir", 
@@ -28,6 +27,7 @@ public class Infractor {
 	@Convert(converter = ConverterCharDB400.class)
 	private String nif;
 	
+	@NoCreate @NoModify
 	@ManyToOne(fetch = FetchType.LAZY)
 	@DescriptionsList(descriptionProperties = "tipo")
 	@JoinColumn(name = "INFTPN", referencedColumnName = "TPNTIP")
@@ -56,7 +56,7 @@ public class Infractor {
 	private Date fechaCaducidadPermisoConducir;
 	
 	@ReadOnly
-	@OneToMany(mappedBy = "infractor")
+	@OneToMany(fetch = FetchType.LAZY ,mappedBy = "infractor")
 	@ListProperties(value = "anyo, fecha, importe, agente.codigo, agente.nombre")
 	@CollectionView("desdeInfractor")
 	private Collection<Multa> multas;
