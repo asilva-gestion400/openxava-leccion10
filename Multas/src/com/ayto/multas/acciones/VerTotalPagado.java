@@ -12,7 +12,7 @@ public class VerTotalPagado extends TabBaseAction{
 
 	@Override
 	public void execute() throws Exception {
-
+		
 		BigDecimal total = BigDecimal.ZERO;
 
 		for (Map key: getTab().getSelectedKeys()) {

@@ -31,6 +31,12 @@ public class ClonarMulta extends TabBaseAction {
 			multaClonada.setObservaciones("**** MULTA CLONADA ****");
 			
 			XPersistence.getManager().persist(multaClonada);
+			
+			setNextMode(DETAIL);
+			
+			getView().setValue("id", multaClonada.getId());
+			
+			getView().findObject();
 		}
 	}
 }

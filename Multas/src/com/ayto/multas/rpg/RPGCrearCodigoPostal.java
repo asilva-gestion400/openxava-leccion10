@@ -73,19 +73,4 @@ public class RPGCrearCodigoPostal {
 		
 		return error;
 	}
-	
-//	public static void main(String[] args) {
-//		
-//		XPersistence.setPersistenceUnit("junit");
-//		
-//		CodigoPostal codigoPostal = new CodigoPostal();
-//		
-//		codigoPostal.setCodigo(44002);
-//		
-//		codigoPostal.setMunicipio("TERUEL");
-//		
-//		codigoPostal.setProvincia("TERUEL");
-//		
-//		System.out.println(RPGCrearCodigoPostal.crear(codigoPostal));
-//	}
 }

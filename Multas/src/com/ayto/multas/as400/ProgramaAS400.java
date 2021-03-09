@@ -7,7 +7,6 @@ import java.util.logging.*;
 
 import org.openxava.util.*;
 
-import com.ayto.multas.util.*;
 import com.ibm.as400.access.*;
 
 public class ProgramaAS400 {

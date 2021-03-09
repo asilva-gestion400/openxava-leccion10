@@ -203,6 +203,17 @@ For backward compatibility we still support the use of servlets.xml, filters.xml
 		<url-pattern>/dwr/*</url-pattern>
 	</servlet-mapping>	
 	
+	
+	<servlet-mapping>
+		<servlet-name>VisualizarDocumentoAS400</servlet-name>
+		<url-pattern>/visualizarDocumentoAS400</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<display-name>VisualizarDocumentoAS400</display-name>
+		<servlet-name>VisualizarDocumentoAS400</servlet-name>
+		<servlet-class>com.ayto.multas.as400.VisualizarDocumentoAS400</servlet-class>
+	</servlet>
 
 
 	<mime-mapping>

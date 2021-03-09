@@ -8,9 +8,12 @@ public class DocumentoAS400Util {
 	
 	private AS400 as400;
 	
-	public DocumentoAS400Util(String server,String user,String password){
+	public DocumentoAS400Util(ConfiguracionAS400 configuracion){
 		
-		as400 = new AS400(server,user,password);
+		as400 = new AS400(
+				configuracion.getIp(),
+				configuracion.getUser(),
+				configuracion.getPassword());
 	}
 	
 	public DocumentoAS400Util(AS400 as400){
